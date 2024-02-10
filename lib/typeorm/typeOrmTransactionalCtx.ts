@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { QueryRunnerWrapper, wrap } from './queryRunnerWrapper';
 
-export default class TransactionalTestContext {
+export class TypeOrmTransactionalCtx {
   private queryRunner: QueryRunnerWrapper | null = null;
   private originQueryRunnerFunction: any;
 

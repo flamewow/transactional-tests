@@ -4,13 +4,13 @@
  */
 import { QueryRunner } from 'typeorm';
 
-interface QueryRunnerWrapper extends QueryRunner {
+export interface QueryRunnerWrapper extends QueryRunner {
   releaseQueryRunner(): Promise<void>;
 }
 
 let release: () => Promise<void>;
 
-const wrap = (originalQueryRunner: QueryRunner): QueryRunnerWrapper => {
+export const wrap = (originalQueryRunner: QueryRunner): QueryRunnerWrapper => {
   release = originalQueryRunner.release;
   originalQueryRunner.release = () => {
     return Promise.resolve();
@@ -24,4 +24,3 @@ const wrap = (originalQueryRunner: QueryRunner): QueryRunnerWrapper => {
   return originalQueryRunner as QueryRunnerWrapper;
 };
 
-export { QueryRunnerWrapper, wrap };

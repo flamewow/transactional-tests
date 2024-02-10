@@ -1,11 +1,11 @@
 import { Connection, createConnection, getConnection, Repository } from 'typeorm';
-import TransactionalTestContext from '../src/transactionalTestContext';
+import { TypeOrmTransactionalCtx } from '#lib';
 import Person from './entities/person.entity';
 
 describe('transactional test example - SQL lite', () => {
   let connection: Connection;
   let repository: Repository<Person>;
-  let transactionalContext: TransactionalTestContext;
+  let transactionalContext:  TypeOrmTransactionalCtx ;
 
   beforeEach(async () => {
     await createConnection({
@@ -21,7 +21,7 @@ describe('transactional test example - SQL lite', () => {
   beforeEach(async () => {
     connection = getConnection();
     repository = connection.getRepository(Person);
-    transactionalContext = new TransactionalTestContext(connection);
+    transactionalContext = new TypeOrmTransactionalCtx (connection);
     await transactionalContext.start();
     await Promise.all([
       repository.save(new Person({ name: 'Aragorn' })),

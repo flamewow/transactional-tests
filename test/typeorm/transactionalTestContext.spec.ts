@@ -1,16 +1,19 @@
-import * as wrapper from '../src/queryRunnerWrapper'
+import { wrap , TypeOrmTransactionalCtx} from '#lib'
 import { Connection, QueryRunner } from 'typeorm'
-import TransactionalTestContext from '../src/transactionalTestContext'
 
-jest.mock('../src/queryRunnerWrapper')
+
+
 
 describe('TransactionalTestContext', () => {
   let connection: Connection
-  let transactionalTestContext: TransactionalTestContext
+  let transactionalTestContext: TypeOrmTransactionalCtx
   let wrappedRunner: any
   const queryRunner = {} as QueryRunner
+
   // @ts-ignore wrapper here is a jest mock
-  wrapper.wrap = jest.fn().mockImplementation(() => wrappedRunner)
+  jest.mock('#lib', () => ({
+    wrap: jest.fn().mockImplementation(() => wrappedRunner)
+  }));
 
   beforeEach(() => {
     connection = Object.create({
@@ -22,7 +25,7 @@ describe('TransactionalTestContext', () => {
       startTransaction: jest.fn(),
       rollbackTransaction: jest.fn()
     }
-    transactionalTestContext = new TransactionalTestContext(connection)
+    transactionalTestContext = new TypeOrmTransactionalCtx(connection)
   })
 
   describe('start', () => {
@@ -32,7 +35,7 @@ describe('TransactionalTestContext', () => {
       })
 
       it('should create the wrapped query builder', () => {
-        expect(wrapper.wrap).toHaveBeenCalledWith(queryRunner)
+        expect(wrap).toHaveBeenCalledWith(queryRunner)
       })
 
       it('should connect with the database', () => {
