@@ -1,0 +1,48 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint/eslint-plugin",
+    "import"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "root": true,
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "ignorePatterns": [
+    ".eslintrc.js"
+  ],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error", {
+        "args": "none"
+      }],
+    "max-len": [
+      1,
+      {
+        "code": 200,
+        "tabWidth": 2,
+        "ignoreUrls": true
+      }
+    ],
+    "sort-imports": ["warn", { "ignoreDeclarationSort": true, "ignoreCase": true }],
+    "import/order": [
+      "warn",
+      {
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "groups": [["builtin", "external"], "parent", "sibling", "index"],
+        "newlines-between": "never"
+      }
+    ],
+    "no-return-await": "error"
+  }
+}

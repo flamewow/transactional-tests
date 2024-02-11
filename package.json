@@ -1,26 +1,25 @@
 {
-  "name": "nestjs-transactional-tests",
+  "name": "transactional-tests",
   "version": "0.0.1",
-  "homepage": "https://github.com/flamewow/nestjs-transactional-tests",
+  "homepage": "https://github.com/flamewow/transactional-tests",
   "description": "",
   "keywords": [],
-  "main": "dist/nestjs-transactional-tests.umd.js",
-  "module": "dist/nestjs-transactional-tests.es5.js",
-  "types": "dist/types/index.d.ts",
+  "main": "./dist/lib/index.js",
+  "types": "./dist/lib/index.d.ts",
   "files": [
     "dist"
   ],
   "author": "Ilya Moroz <ilya.moroz.v@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/flamewow/nestjs-transactional-tests"
+    "url": "https://github.com/flamewow/transactional-tests"
   },
   "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "prepare": "husky install",
     "format": "prettier --write \"lib/**/*.{js,ts,json}\"  \"e2e/**/*.{js,ts,json}\"",
-    "lint": "eslint --fix \"lib/**/*.ts\"  \"sample/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint --fix \"lib/**/*.ts\" \"test/**/*.ts\"",
     "pre-commit": "lint-staged",
     "prestart": "npm install && npm run build",
     "make:snapshots": "bash misc/take-snaphots.sh",
@@ -99,9 +98,7 @@
     "ts-loader": "9.5.1",
     "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.3.3"
-  },
-  "dependencies": {
+    "typescript": "5.3.3",
     "sqlite3": "^5.1.7"
   }
 }

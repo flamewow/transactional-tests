@@ -1,10 +1,6 @@
 import { DataSource, QueryRunner } from 'typeorm';
-
-interface PatchedQueryRunner extends QueryRunner {
-  releaseQueryRunner(): Promise<void>;
-}
-
-export type RollbackAllFn = () => Promise<void[]>;
+import { RollbackFn } from '../types';
+import { PatchedQueryRunner } from './transactional-ctx.interfaces';
 
 export class TypeormTransactionalCtx {
   private queryRunner: PatchedQueryRunner | null;
@@ -13,12 +9,16 @@ export class TypeormTransactionalCtx {
 
   constructor(private readonly dataSource: DataSource) {}
 
-  static async init(dataSource: DataSource): Promise<RollbackAllFn>
-  static async init(dataSources: DataSource[]): Promise<RollbackAllFn>
-  static async init(dataSources: DataSource | DataSource[]): Promise<RollbackAllFn> {
-    const _dataSources = Array.isArray(dataSources) ? dataSources : [dataSources];
+  static async init(dataSource: DataSource): Promise<RollbackFn>;
+  static async init(dataSources: DataSource[]): Promise<RollbackFn>;
+  static async init(
+    dataSources: DataSource | DataSource[],
+  ): Promise<RollbackFn> {
+    const _dataSources = Array.isArray(dataSources)
+      ? dataSources
+      : [dataSources];
     const instances = await Promise.all(
-      _dataSources.map(async dataSource => {
+      _dataSources.map(async (dataSource) => {
         const instance = new TypeormTransactionalCtx(dataSource);
         await instance.begin();
         return instance;
@@ -26,7 +26,7 @@ export class TypeormTransactionalCtx {
     );
 
     return function rollbackAll() {
-      return Promise.all(instances.map(instance => instance.rollback()));
+      return Promise.all(instances.map((instance) => instance.rollback()));
     };
   }
 

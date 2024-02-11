@@ -1,11 +1,11 @@
 import { DataSource, Repository } from 'typeorm';
-import { TypeormTransactionalCtx, RollbackAllFn } from '#lib';
-import Person from './entities/person.entity';
+import Person from './person.entity';
+import { RollbackFn, TypeormTransactionalCtx } from '#lib';
 
 describe('transactional ctx integration (sqlite0', () => {
   let dataSource: DataSource;
   let repository: Repository<Person>;
-  let rollbackFn: RollbackAllFn;
+  let rollbackFn: RollbackFn;
 
   beforeEach(async () => {
     dataSource = new DataSource({
