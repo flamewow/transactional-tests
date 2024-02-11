@@ -1,31 +1,27 @@
-import { wrap , TypeOrmTransactionalCtx} from '#lib'
+import { wrap , TypeormTransactionalCtx} from '#lib'
 import { Connection, QueryRunner } from 'typeorm'
-
-
-
 
 describe('TransactionalTestContext', () => {
   let connection: Connection
-  let transactionalTestContext: TypeOrmTransactionalCtx
+  let transactionalTestContext: TypeormTransactionalCtx
   let wrappedRunner: any
   const queryRunner = {} as QueryRunner
 
-  // @ts-ignore wrapper here is a jest mock
-  jest.mock('#lib', () => ({
-    wrap: jest.fn().mockImplementation(() => wrappedRunner)
-  }));
+
 
   beforeEach(() => {
     connection = Object.create({
       createQueryRunner: jest.fn().mockImplementation(() => queryRunner)
-    }) as Connection
+    }) as Connection;
+
     wrappedRunner = {
       connect: jest.fn(),
       releaseQueryRunner: jest.fn(),
       startTransaction: jest.fn(),
       rollbackTransaction: jest.fn()
     }
-    transactionalTestContext = new TypeOrmTransactionalCtx(connection)
+
+    transactionalTestContext = new TypeormTransactionalCtx(connection)
   })
 
   describe('start', () => {

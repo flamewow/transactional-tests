@@ -1,2 +1,2 @@
-export { TypeOrmTransactionalCtx } from './typeOrmTransactionalCtx'
-export { QueryRunnerWrapper, wrap } from './queryRunnerWrapper'
+export { TypeormTransactionalCtx } from './typeorm-transactional-ctx'
+export { QueryRunnerWrapper, wrap } from './query-runner-wrapper'

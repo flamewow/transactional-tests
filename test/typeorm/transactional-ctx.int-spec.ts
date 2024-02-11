@@ -1,27 +1,26 @@
-import { Connection, createConnection, getConnection, Repository } from 'typeorm';
-import { TypeOrmTransactionalCtx } from '#lib';
+import { DataSource, createConnection, getConnection, Repository } from 'typeorm';
+import { TypeormTransactionalCtx } from '#lib';
 import Person from './entities/person.entity';
 
-describe('transactional test example - SQL lite', () => {
-  let connection: Connection;
+
+describe('transactional ctx integration (sqlite0', () => {
+  let dataSource: DataSource;
   let repository: Repository<Person>;
-  let transactionalContext:  TypeOrmTransactionalCtx ;
+  let transactionalContext:  TypeormTransactionalCtx ;
 
   beforeEach(async () => {
-    await createConnection({
+    dataSource = new DataSource({
       type: 'sqlite',
-      name: 'default',
       synchronize: true,
       dropSchema: true,
       entities: [Person],
       database: ':memory:',
     });
-  });
 
-  beforeEach(async () => {
-    connection = getConnection();
-    repository = connection.getRepository(Person);
-    transactionalContext = new TypeOrmTransactionalCtx (connection);
+    dataSource.initialize()
+
+    repository = dataSource.getRepository(Person);
+    transactionalContext = new TypeormTransactionalCtx (dataSource);
     await transactionalContext.start();
     await Promise.all([
       repository.save(new Person({ name: 'Aragorn' })),
