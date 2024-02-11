@@ -1,24 +1,21 @@
 {
-  "name": "typeorm-transactional-tests",
-  "version": "0.0.0",
-  "homepage": "https://github.com/viniciusjssouza/typeorm-transactional-tests",
+  "name": "nestjs-transactional-tests",
+  "version": "0.0.1",
+  "homepage": "https://github.com/flamewow/nestjs-transactional-tests",
   "description": "",
   "keywords": [],
-  "main": "dist/typeorm-transactional-tests.umd.js",
-  "module": "dist/typeorm-transactional-tests.es5.js",
+  "main": "dist/nestjs-transactional-tests.umd.js",
+  "module": "dist/nestjs-transactional-tests.es5.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
-  "author": "Vinicius Souza <viniciusjssouza@gmail.com>",
+  "author": "Ilya Moroz <ilya.moroz.v@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/viniciusjssouza/typeorm-transactional-tests"
+    "url": "https://github.com/flamewow/nestjs-transactional-tests"
   },
   "license": "MIT",
-  "engines": {
-    "node": ">=6.0.0"
-  },
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "prepare": "husky install",
